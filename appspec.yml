@@ -19,3 +19,15 @@ hooks:
     - location: scripts/validate_server.sh
       timeout: 300
       runas: root
+
+stages:
+  - deploy
+
+
+deploy:
+  stage: deploy
+  image:
+    name: awazon/aws-cli
+    script:
+      - aws configure set region us-east-1
+      - aws s3 cp ./target/index.html s3://$S3_BUCKET 
